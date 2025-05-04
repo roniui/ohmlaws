@@ -5,6 +5,7 @@ order: 4
 ---
 
 # About
+![Placeholder IMG](/assets/img/profile.png)
 
 Welcome to **OhmLaws**, a knowledge-sharing platform focused on **question and answer topics** related to electrical basics, general science.
 
@@ -21,7 +22,7 @@ Our goal is to provide clear, accurate, and concise answers to commonly asked qu
 ### Who Runs This Site
 I'm passionate about science, tech, and sharing practical knowledge with others.
 
----
+
 
 Feel free to explore, learn, and contribute.  
 Got a question? [Contact me](mailto:roniui.github.io@gmail.com).
