@@ -11,6 +11,7 @@ script_includes:
 ---
 
 {% include lang.html %}
+
 {% include toc-status.html %}
 
 <article class="px-1" data-toc="{{ enable_toc }}">
@@ -39,6 +40,7 @@ script_includes:
         {% capture src %}src="{{ page.image.path | default: page.image }}"{% endcapture %}
         {% capture class %}class="preview-img{% if page.image.no_bg %}{{ ' no-bg' }}{% endif %}"{% endcapture %}
         {% capture alt %}alt="{{ page.image.alt | xml_escape | default: "Preview Image" }}"{% endcapture %}
+
         {% if page.image.lqip %}
           {%- capture lqip -%}lqip="{{ page.image.lqip }}"{%- endcapture -%}
         {% endif %}
@@ -54,17 +56,22 @@ script_includes:
       <div class="d-flex justify-content-between">
         <!-- author(s) -->
         <span>
-          {% assign authors = page.author | default: page.authors %}
+          {% if page.author %}
+            {% assign authors = page.author %}
+          {% elsif page.authors %}
+            {% assign authors = page.authors %}
+          {% endif %}
+
           {{ site.data.locales[lang].post.written_by }}
+
           <em>
             {% if authors %}
               {% for author in authors %}
-                {% assign author_data = site.data.authors[author] %}
-                {% if author_data.url %}
-                  <a href="{{ author_data.url }}">{{ author_data.name }}</a>
-                {% else %}
-                  {{ author_data.name }}
-                {% endif %}
+                {% if site.data.authors[author].url -%}
+                  <a href="{{ site.data.authors[author].url }}">{{ site.data.authors[author].name }}</a>
+                {%- else -%}
+                  {{ site.data.authors[author].name }}
+                {%- endif %}
                 {% unless forloop.last %}{{ '</em>, <em>' }}{% endunless %}
               {% endfor %}
             {% else %}
@@ -72,7 +79,16 @@ script_includes:
             {% endif %}
           </em>
         </span>
-
+{% assign authors = page.author | default: page.authors %}
+{% for author_id in authors %}
+  {% assign author = site.data.authors[author_id] %}
+  {% if author.email and author.show_email %}
+    <p class="mb-0">
+      <i class="fas fa-envelope"></i>
+      <a href="mailto:{{ author.email }}">{{ author.email }}</a>
+    </p>
+  {% endif %}
+{% endfor %}
         <div>
           <!-- pageviews -->
           {% if site.pageviews.provider and site.analytics[site.pageviews.provider].id %}
@@ -146,46 +162,27 @@ script_includes:
       </div>
     {% endif %}
 
-    <div class="post-tail-bottom d-flex justify-content-between align-items-center mt-5 pb-2">
+    <div
+      class="
+        post-tail-bottom
+        d-flex justify-content-between align-items-center mt-5 pb-2
+      "
+    >
       <div class="license-wrapper">
         {% if site.data.locales[lang].copyright.license.template %}
           {% capture _replacement %}
-            <a href="{{ site.data.locales[lang].copyright.license.link }}">
-              {{ site.data.locales[lang].copyright.license.name }}
-            </a>
-          {% endcapture %}
+        <a href="{{ site.data.locales[lang].copyright.license.link }}">
+          {{ site.data.locales[lang].copyright.license.name }}
+        </a>
+        {% endcapture %}
+
           {{ site.data.locales[lang].copyright.license.template | replace: ':LICENSE_NAME', _replacement }}
         {% endif %}
       </div>
 
       {% include post-sharing.html lang=lang %}
     </div>
-
-    <!-- author card -->
-    {% assign authors = page.author | default: page.authors %}
-    {% for author_id in authors %}
-      {% assign author = site.data.authors[author_id] %}
-      <div class="card border-0 shadow-sm p-3 mt-5 mb-3">
-        <div class="card-body">
-          <h5 class="card-title mb-1">{{ author.name }}</h5>
-          {% if author.description %}
-            <p class="card-text mb-2 text-muted">{{ author.description }}</p>
-          {% endif %}
-
-          <div class="d-flex gap-3">
-            {% if author.email and author.show_email %}
-              <a href="mailto:{{ author.email }}" class="text-decoration-none" title="Email">
-                <i class="fas fa-envelope fa-lg"></i>
-              </a>
-            {% endif %}
-            {% if author.x %}
-              <a href="{{ author.x }}" class="text-decoration-none" title="X (Twitter)" target="_blank" rel="noopener">
-                <i class="fab fa-x-twitter fa-lg"></i>
-              </a>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    {% endfor %}
+    <!-- .post-tail-bottom -->
   </div>
-  </article>
+  <!-- div.post-tail-wrapper -->
+        </article>
