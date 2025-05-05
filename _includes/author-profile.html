@@ -1,6 +1,11 @@
 {% if author.email and author.show_email %}
-  <p>
+  <a href="mailto:{{ author.email }}" class="text-decoration-none" title="Email">
     <i class="fas fa-envelope"></i>
-    <a href="mailto:{{ author.email }}">{{ author.email }}</a>
-  </p>
+  </a>
+{% endif %}
+
+{% if author.x %}
+  <a href="{{ author.x }}" class="text-decoration-none" title="X (Twitter)" target="_blank" rel="noopener">
+    <i class="fab fa-x-twitter"></i>
+  </a>
 {% endif %}
