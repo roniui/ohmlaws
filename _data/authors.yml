@@ -2,7 +2,4 @@ Roni:
   name: Roni
   email: roniui.github.io@gmail.com
   show_email: true
-  x: https://x.com/yourusername
-  description: >
-  Roni is the admin of OhmLaws site.
-    Passionate about electronics, web development, and smart technologies. When he's not coding or exploring new tools, he enjoys experimenting with circuits and building DIY projects.
+  url: https://roniui.github.io
