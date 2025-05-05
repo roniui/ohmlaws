@@ -1,12 +1,6 @@
-<div class="d-flex gap-3">
-  {% if author.email and author.show_email %}
-    <a href="mailto:{{ author.email }}" class="text-decoration-none" title="Email">
-      <i class="fas fa-envelope fa-lg"></i>
-    </a>
-  {% endif %}
-  {% if author.x %}
-    <a href="{{ author.x }}" class="text-decoration-none" title="X (Twitter)" target="_blank" rel="noopener">
-      <i class="fab fa-x-twitter fa-lg"></i>
-    </a>
-  {% endif %}
-</div>
+{% if author.email and author.show_email %}
+  <p>
+    <i class="fas fa-envelope"></i>
+    <a href="mailto:{{ author.email }}">{{ author.email }}</a>
+  </p>
+{% endif %}
