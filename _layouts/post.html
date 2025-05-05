@@ -79,16 +79,7 @@ script_includes:
             {% endif %}
           </em>
         </span>
-{% assign authors = page.author | default: page.authors %}
-{% for author_id in authors %}
-  {% assign author = site.data.authors[author_id] %}
-  {% if author.email and author.show_email %}
-    <p class="mb-0">
-      <i class="fas fa-envelope"></i>
-      <a href="mailto:{{ author.email }}">{{ author.email }}</a>
-    </p>
-  {% endif %}
-{% endfor %}
+
         <div>
           <!-- pageviews -->
           {% if site.pageviews.provider and site.analytics[site.pageviews.provider].id %}
@@ -185,4 +176,29 @@ script_includes:
     <!-- .post-tail-bottom -->
   </div>
   <!-- div.post-tail-wrapper -->
-          </article>
+  {% assign authors = page.author | default: page.authors %}
+{% for author_id in authors %}
+  {% assign author = site.data.authors[author_id] %}
+  <div class="card border-0 shadow-sm p-3 mt-5 mb-3">
+    <div class="card-body">
+      <h5 class="card-title mb-1">{{ author.name }}</h5>
+      {% if author.description %}
+        <p class="card-text mb-2 text-muted">{{ author.description }}</p>
+      {% endif %}
+
+      <div class="d-flex gap-3">
+        {% if author.email and author.show_email %}
+          <a href="mailto:{{ author.email }}" class="text-decoration-none" title="Email">
+            <i class="fas fa-envelope fa-lg"></i>
+          </a>
+        {% endif %}
+        {% if author.x %}
+          <a href="{{ author.x }}" class="text-decoration-none" title="X (Twitter)" target="_blank" rel="noopener">
+            <i class="fab fa-x-twitter fa-lg"></i>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endfor %}
+        </article>
